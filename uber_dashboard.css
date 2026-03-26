@@ -1,0 +1,395 @@
+/* ═══════════════════════════════════════════════════════════════════
+   UBER NCR ANALYTICS DASHBOARD — Theme v1.0
+   Author: Dashboard Design System
+   Usage: Loaded via st.markdown() in app.py
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── FONTS ─────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=JetBrains+Mono:wght@400;600&display=swap');
+
+/* ── ROOT PALETTE ───────────────────────────────────────────────── */
+:root {
+  --black:       #0a0a0b;
+  --surface:     #111114;
+  --card:        #18181d;
+  --border:      #2a2a35;
+  --uber-gold:   #f5c518;
+  --uber-amber:  #e8a000;
+  --neon-teal:   #00e5cc;
+  --muted:       #6b6b80;
+  --text:        #e8e8ef;
+  --text-dim:    #9090a8;
+  --danger:      #ff4d6d;
+  --success:     #00e5a0;
+  --font-head:   'Bebas Neue', sans-serif;
+  --font-body:   'DM Sans', sans-serif;
+  --font-mono:   'JetBrains Mono', monospace;
+}
+
+/* ── GLOBAL RESET ───────────────────────────────────────────────── */
+html, body, [class*="css"] {
+  font-family: var(--font-body) !important;
+  background-color: var(--black) !important;
+  color: var(--text) !important;
+}
+
+/* ── MAIN APP BACKGROUND (dark grid + gold glow) ────────────────── */
+.stApp {
+  background: var(--black) !important;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(245,197,24,0.06) 0%, transparent 70%),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 60px,
+      rgba(255,255,255,0.012) 60px,
+      rgba(255,255,255,0.012) 61px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 60px,
+      rgba(255,255,255,0.012) 60px,
+      rgba(255,255,255,0.012) 61px
+    ) !important;
+}
+
+/* ── SIDEBAR ────────────────────────────────────────────────────── */
+[data-testid="stSidebar"] {
+  background: var(--surface) !important;
+  border-right: 1px solid var(--border) !important;
+  padding-top: 1rem !important;
+}
+
+[data-testid="stSidebar"]::before {
+  content: "🚖  UBER NCR";
+  display: block;
+  font-family: var(--font-head) !important;
+  font-size: 1.8rem;
+  letter-spacing: 0.15em;
+  color: var(--uber-gold);
+  text-align: center;
+  padding: 1.2rem 1rem 1rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.2rem;
+}
+
+/* ── OPTION MENU (streamlit-option-menu) ───────────────────────── */
+.nav-link {
+  font-family: var(--font-body) !important;
+  font-weight: 500 !important;
+  font-size: 0.88rem !important;
+  color: var(--text-dim) !important;
+  border-radius: 8px !important;
+  margin: 2px 8px !important;
+  transition: all 0.2s ease !important;
+}
+.nav-link:hover {
+  color: var(--uber-gold) !important;
+  background: rgba(245, 197, 24, 0.07) !important;
+}
+.nav-link.active,
+.nav-link-selected {
+  background: linear-gradient(135deg, rgba(245,197,24,0.15), rgba(232,160,0,0.08)) !important;
+  color: var(--uber-gold) !important;
+  border: 1px solid rgba(245, 197, 24, 0.25) !important;
+}
+
+/* ── HEADINGS ───────────────────────────────────────────────────── */
+h1, h2, h3 {
+  font-family: var(--font-head) !important;
+  letter-spacing: 0.06em !important;
+  color: var(--text) !important;
+}
+h1 { font-size: 3.2rem !important; }
+h2 { font-size: 2.2rem !important; color: var(--uber-gold) !important; }
+h3 { font-size: 1.6rem !important; }
+
+/* ── METRIC CARDS ───────────────────────────────────────────────── */
+[data-testid="stMetric"] {
+  background: var(--card) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 14px !important;
+  padding: 1.2rem 1.4rem !important;
+  position: relative !important;
+  overflow: hidden !important;
+  transition: transform 0.2s ease, border-color 0.2s ease !important;
+}
+[data-testid="stMetric"]:hover {
+  transform: translateY(-2px) !important;
+  border-color: var(--uber-gold) !important;
+}
+/* Gold → Teal left accent stripe */
+[data-testid="stMetric"]::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--uber-gold), var(--neon-teal));
+  border-radius: 3px 0 0 3px;
+}
+[data-testid="stMetricLabel"] p {
+  font-family: var(--font-mono) !important;
+  font-size: 0.7rem !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: var(--text-dim) !important;
+}
+[data-testid="stMetricValue"] {
+  font-family: var(--font-head) !important;
+  font-size: 2.1rem !important;
+  color: var(--text) !important;
+}
+[data-testid="stMetricDelta"] {
+  font-family: var(--font-mono) !important;
+  font-size: 0.72rem !important;
+}
+
+/* ── DATAFRAMES ─────────────────────────────────────────────────── */
+[data-testid="stDataFrame"] {
+  border: 1px solid var(--border) !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+}
+.dvn-scroller {
+  background: var(--card) !important;
+}
+
+/* ── PLOTLY CHART WRAPPERS ──────────────────────────────────────── */
+.js-plotly-plot,
+.plot-container {
+  background: var(--card) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 14px !important;
+  overflow: hidden !important;
+  padding: 0.5rem !important;
+}
+
+/* ── BUTTONS ────────────────────────────────────────────────────── */
+.stButton > button,
+[data-testid="stDownloadButton"] > button {
+  font-family: var(--font-mono) !important;
+  font-size: 0.78rem !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  background: transparent !important;
+  color: var(--uber-gold) !important;
+  border: 1px solid var(--uber-gold) !important;
+  border-radius: 8px !important;
+  padding: 0.55rem 1.2rem !important;
+  transition: all 0.2s ease !important;
+}
+.stButton > button:hover,
+[data-testid="stDownloadButton"] > button:hover {
+  background: var(--uber-gold) !important;
+  color: var(--black) !important;
+  box-shadow: 0 0 18px rgba(245, 197, 24, 0.35) !important;
+}
+
+/* ── TEXT INPUT / SELECTBOX / MULTISELECT ───────────────────────── */
+.stTextInput > div > div > input,
+.stSelectbox > div > div,
+.stMultiSelect > div > div {
+  background: var(--card) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 8px !important;
+  color: var(--text) !important;
+  font-family: var(--font-body) !important;
+}
+.stTextInput > div > div > input:focus,
+.stSelectbox > div > div:focus-within {
+  border-color: var(--uber-gold) !important;
+  box-shadow: 0 0 0 2px rgba(245, 197, 24, 0.15) !important;
+}
+
+/* ── SLIDER ─────────────────────────────────────────────────────── */
+[data-testid="stSlider"] > div > div > div > div {
+  background: linear-gradient(90deg, var(--uber-gold), var(--neon-teal)) !important;
+}
+[data-testid="stSlider"] [data-testid="stThumbValue"] {
+  background: var(--uber-gold) !important;
+  color: var(--black) !important;
+  font-family: var(--font-mono) !important;
+  font-size: 0.7rem !important;
+}
+
+/* ── DIVIDER ────────────────────────────────────────────────────── */
+hr {
+  border: none !important;
+  height: 1px !important;
+  background: linear-gradient(90deg, transparent, var(--border), transparent) !important;
+  margin: 1.5rem 0 !important;
+}
+
+/* ── EXPANDER ───────────────────────────────────────────────────── */
+[data-testid="stExpander"] {
+  background: var(--card) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 12px !important;
+}
+[data-testid="stExpander"] summary {
+  font-family: var(--font-mono) !important;
+  font-size: 0.82rem !important;
+  letter-spacing: 0.08em !important;
+  color: var(--text-dim) !important;
+}
+
+/* ── ALERT / INFO / SUCCESS / WARNING ───────────────────────────── */
+[data-testid="stAlert"] {
+  border-radius: 10px !important;
+  border: none !important;
+  font-family: var(--font-mono) !important;
+  font-size: 0.8rem !important;
+}
+
+/* ── CUSTOM SCROLLBAR ───────────────────────────────────────────── */
+::-webkit-scrollbar        { width: 5px; height: 5px; }
+::-webkit-scrollbar-track  { background: var(--surface); }
+::-webkit-scrollbar-thumb  { background: var(--border); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--uber-gold); }
+
+/* ── COLUMN / LAYOUT GAPS ───────────────────────────────────────── */
+[data-testid="stHorizontalBlock"] { gap: 1rem !important; }
+
+/* ── HIDE STREAMLIT BRANDING ────────────────────────────────────── */
+#MainMenu, footer, header              { visibility: hidden; }
+.viewerBadge_container__1QSob          { display: none !important; }
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   CUSTOM COMPONENT CLASSES
+   Use these via st.markdown("<div class='...'> ... </div>")
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── HERO BANNER ────────────────────────────────────────────────── */
+.hero-banner {
+  background: linear-gradient(135deg, #111114 0%, #1a1a1f 40%, #0f0f12 100%);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 2rem 2.5rem;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+/* Top-right gold glow orb */
+.hero-banner::before {
+  content: "";
+  position: absolute;
+  top: -50%; right: -10%;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(245,197,24,0.08) 0%, transparent 70%);
+  border-radius: 50%;
+}
+/* Bottom-left teal glow orb */
+.hero-banner::after {
+  content: "";
+  position: absolute;
+  bottom: -40%; left: -5%;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(0,229,204,0.05) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+/* ── HERO TITLE (gradient text) ─────────────────────────────────── */
+.hero-title {
+  font-family: var(--font-head);
+  font-size: 3.8rem;
+  letter-spacing: 0.08em;
+  background: linear-gradient(90deg, #f5c518, #e8a000, #00e5cc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+  line-height: 1;
+}
+
+/* ── HERO SUBTITLE ──────────────────────────────────────────────── */
+.hero-sub {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  margin-top: 0.6rem;
+}
+
+/* ── HERO BADGE (pill tag) ──────────────────────────────────────── */
+.hero-badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--uber-gold);
+  border: 1px solid rgba(245, 197, 24, 0.3);
+  border-radius: 20px;
+  padding: 0.25rem 0.75rem;
+  margin-top: 1rem;
+}
+
+/* ── SECTION LABEL (teal mono tag above widgets) ────────────────── */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--neon-teal);
+  margin-bottom: 0.4rem;
+}
+
+/* ── CHART CARD WRAPPER ─────────────────────────────────────────── */
+.chart-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* ── CHART TITLE (gold left-border accent) ──────────────────────── */
+.chart-title {
+  font-family: var(--font-head);
+  font-size: 1.3rem;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+  margin-bottom: 0.5rem;
+  padding-left: 0.5rem;
+  border-left: 3px solid var(--uber-gold);
+}
+
+/* ── SIDEBAR FOOTER LABEL ───────────────────────────────────────── */
+.sidebar-footer {
+  position: absolute;
+  bottom: 2rem;
+  left: 0; right: 0;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  color: #3a3a4a;
+  text-transform: uppercase;
+}
+
+/* FIX: DataFrame text visibility */
+[data-testid="stDataFrame"] * {
+  color: var(--text) !important;
+}
+
+/* Header styling */
+[data-testid="stDataFrame"] thead th {
+  background-color: var(--surface) !important;
+  color: var(--uber-gold) !important;
+  font-weight: 600 !important;
+}
+
+/* Table cells */
+[data-testid="stDataFrame"] tbody td {
+  color: var(--text) !important;
+}
+
+/* Alternate row shading */
+[data-testid="stDataFrame"] tbody tr:nth-child(even) {
+  background-color: rgba(255,255,255,0.02) !important;
+}
